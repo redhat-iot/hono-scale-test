@@ -1,0 +1,88 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+glusterfs
+
+[OSEv3:vars]
+
+ansible_ssh_user=root
+
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+
+openshift_master_dynamic_provisioning_enabled=true
+
+openshift_master_default_subdomain=wonderful.iot-playground.org
+openshift_master_cluster_hostname=wonderful.iot-playground.org
+openshift_master_cluster_public_hostname=wonderful.iot-playground.org
+
+openshift_deployment_type=openshift-enterprise
+
+# Disable skopeo check for images
+
+openshift_disable_check=docker_image_availability
+
+# openshift version
+openshift_image_tag=v3.9
+openshift_release=v3.9
+
+# bz 1588768 
+oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
+openshift_examples_modify_imagestreams=true
+
+# CNS
+
+openshift_storage_glusterfs_namespace=gluster-storage
+
+openshift_storage_glusterfs_storageclass=true
+openshift_storage_glusterfs_storageclass_default=true
+
+openshift_storage_glusterfs_block_deploy=true
+openshift_storage_glusterfs_block_storageclass=true
+
+# storage
+
+openshift_hosted_registry_storage_kind=glusterfs
+openshift_hosted_registry_selector='region=infra'
+openshift_hosted_registry_storage_volume_size=50Gi
+#!!openshift_hosted_registry_pvc_storage_class_name="glusterfs-storage-block"
+
+# Metrics
+
+openshift_metrics_install_metrics=true
+openshift_metrics_storage_kind=dynamic
+openshift_metrics_storage_volume_size=10Gi
+openshift_metrics_cassanda_pvc_storage_class_name="glusterfs-storage-block"
+openshift_metrics_cassandra_pvc_storage_class_name="glusterfs-storage-block"
+
+# Cluster logging
+
+openshift_logging_install_logging=true
+openshift_logging_storage_kind=dynamic
+openshift_logging_es_pvc_size=10Gi
+openshift_logging_es_pvc_storage_class_name=glusterfs-storage-block # doesn't work with "dynamic"
+
+[masters]
+gprfc081.sbu.lab.eng.bos.redhat.com
+
+[etcd]
+gprfc081.sbu.lab.eng.bos.redhat.com
+
+[nodes]
+gprfc081.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
+gprfc082.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
+gprfc083.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
+gprfc084.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
+gprfc085.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
+gprfc086.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
+gprfc087.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
+gprfc088.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
+gprfc089.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
+gprfc090.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'storage','zone': 'default'}"
+gprfc091.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'storage','zone': 'default'}"
+gprfc092.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'storage','zone': 'default'}"
+
+[glusterfs]
+gprfc090.sbu.lab.eng.bos.redhat.com glusterfs_devices='[ "/dev/sdc", "/dev/sdd", "/dev/sde" ]'
+gprfc091.sbu.lab.eng.bos.redhat.com glusterfs_devices='[ "/dev/sdc", "/dev/sdd", "/dev/sde" ]'
+gprfc092.sbu.lab.eng.bos.redhat.com glusterfs_devices='[ "/dev/sdc", "/dev/sdd", "/dev/sde" ]'

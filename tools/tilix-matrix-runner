@@ -1,0 +1,43 @@
+#!/bin/bash
+
+printf -v CMD "%q" "$1"
+
+SSH="ssh -t"
+
+start=81
+
+ HOST[0]="root@gprfc0$((start+2)).sbu.lab.eng.bos.redhat.com"
+ HOST[1]="root@gprfc0$((start+10)).sbu.lab.eng.bos.redhat.com"
+ HOST[2]="root@gprfc0$((start+8)).sbu.lab.eng.bos.redhat.com"
+ HOST[3]="root@gprfc0$((start+1)).sbu.lab.eng.bos.redhat.com"
+ HOST[4]="root@gprfc0$((start+5)).sbu.lab.eng.bos.redhat.com"
+ HOST[5]="root@gprfc0$((start+4)).sbu.lab.eng.bos.redhat.com"
+ HOST[6]="root@gprfc0$((start+3)).sbu.lab.eng.bos.redhat.com"
+ HOST[7]="root@gprfc0$((start+7)).sbu.lab.eng.bos.redhat.com"
+ HOST[8]="root@gprfc0$((start+6)).sbu.lab.eng.bos.redhat.com"
+ HOST[9]="root@gprfc0$((start+11)).sbu.lab.eng.bos.redhat.com"
+HOST[10]="root@gprfc0$((start+15)).sbu.lab.eng.bos.redhat.com"
+HOST[11]="root@gprfc0$((start+14)).sbu.lab.eng.bos.redhat.com"
+HOST[12]="root@gprfc0$((start+9)).sbu.lab.eng.bos.redhat.com"
+HOST[13]="root@gprfc0$((start+13)).sbu.lab.eng.bos.redhat.com"
+HOST[14]="root@gprfc0$((start+12)).sbu.lab.eng.bos.redhat.com"
+HOST[15]="root@gprfc0$((start+0)).sbu.lab.eng.bos.redhat.com"
+
+h=0
+
+for i in $(seq 4); do
+
+tilix -a session-add-right -e $SSH ${HOST[$((h))]} "echo $((h)) : ${HOST[$((h))]}; $CMD" ; ((h++))
+tilix -a session-add-down -e $SSH ${HOST[$((h))]} "echo $((h)) : ${HOST[$((h))]}; $CMD"; ((h++))
+tilix -a session-switch-to-terminal-left
+tilix -a session-add-down -e $SSH ${HOST[$((h))]} "echo $((h)) : ${HOST[$((h))]}; $CMD"; ((h++))
+
+tilix -a session-switch-to-terminal-$i
+
+done
+
+tilix -a session-add-right -e $SSH ${HOST[$((h))]} "echo $((h)) : ${HOST[$((h))]}; $CMD"; ((h++))
+tilix -a session-add-down -e $SSH ${HOST[$((h))]} "echo $((h)) : ${HOST[$((h))]}; $CMD"; ((h++))
+tilix -a session-switch-to-terminal-left
+tilix -a session-add-down -e $SSH ${HOST[$((h))]} "echo $((h)) : ${HOST[$((h))]}; $CMD"; ((h++))
+$SSH ${HOST[$((h))]} "echo $((h)) : ${HOST[$((h))]}; $CMD"

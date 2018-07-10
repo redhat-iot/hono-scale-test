@@ -1,0 +1,6 @@
+#!/bin/bash
+
+SCRIPT_PATH="$(dirname "$0")"
+SCRIPT_PATH="$(cd "$SCRIPT_PATH" && pwd )"
+
+tilix --maximize -e "$SCRIPT_PATH/tilix-matrix-runner" "$1"

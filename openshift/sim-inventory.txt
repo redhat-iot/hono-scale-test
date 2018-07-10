@@ -1,0 +1,77 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+nfs
+
+[OSEv3:vars]
+
+openshift_enable_unsupported_configurations=True # Required for NFS
+
+ansible_ssh_user=root
+
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+
+openshift_master_default_subdomain=10.16.154.247.nip.io
+
+openshift_deployment_type=openshift-enterprise
+
+# Disable skopeo check for images
+
+openshift_disable_check=docker_image_availability
+
+# openshift version
+openshift_image_tag=v3.9
+openshift_release=v3.9
+
+# bz 1588768 
+oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
+openshift_examples_modify_imagestreams=true
+
+# Registry
+
+openshift_hosted_registry_storage_kind=nfs
+openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
+openshift_hosted_registry_storage_nfs_directory=/exports
+openshift_hosted_registry_storage_nfs_options='*(rw,root_squash)'
+openshift_hosted_registry_storage_volume_name=registry
+openshift_hosted_registry_storage_volume_size=80Gi
+
+# Metrics
+
+openshift_metrics_install_metrics=true
+openshift_metrics_start_cluster=true
+openshift_metrics_install_hawkular_agent=true
+
+openshift_metrics_storage_kind=nfs
+openshift_metrics_storage_access_modes=['ReadWriteOnce']
+openshift_metrics_storage_nfs_directory=/exports
+openshift_metrics_storage_nfs_options='*(rw,root_squash)'
+openshift_metrics_storage_volume_name=metrics
+openshift_metrics_storage_volume_size=40Gi
+
+# Logging
+
+openshift_logging_install_logging=true
+
+openshift_logging_storage_kind=nfs
+openshift_logging_storage_access_modes=['ReadWriteOnce']
+openshift_logging_storage_nfs_directory=/exports
+openshift_logging_storage_nfs_options='*(rw,root_squash)'
+openshift_logging_storage_volume_name=logging
+openshift_logging_storage_volume_size=10Gi
+
+[masters]
+gprfc093.sbu.lab.eng.bos.redhat.com
+
+[etcd]
+gprfc093.sbu.lab.eng.bos.redhat.com
+
+[nfs]
+gprfc093.sbu.lab.eng.bos.redhat.com
+
+[nodes]
+gprfc093.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
+gprfc094.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
+gprfc095.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
+gprfc096.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
