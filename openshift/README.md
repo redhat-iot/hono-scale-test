@@ -42,6 +42,14 @@ Then install docker:
 
 **Note:** Do not start Docker yet!
 
+Create the docker volume group:
+
+    parted /dev/sdb mktable msdos
+    parted /dev/sdb mkpart primary 1 100GB
+    parted /dev/sdb set 1 lvm on
+    pvcreate /dev/sdb1
+    vgcreate docker-vg /dev/sdb1
+
 Configure the thin pool storage options:
 
     cat <<EOF > /etc/sysconfig/docker-storage-setup
@@ -78,3 +86,24 @@ First log on to the master node and clone this git repository:
 Afterwards create the credentials file on each master:
 
     htpasswd -c /etc/origin/master/htpasswd iot
+
+# Some extras
+
+## InfluxDB storage
+
+For the Hono simulator we used an extra InflxuDB instance. This will be located
+on an additional SSD on the Simulator cluster master.
+
+    parted /dev/sdf mktable msdos
+    parted /dev/sdf mkpart primary 1 100GB
+    parted /dev/sdf set 1 lvm on
+    pvcreate /dev/sdf1
+    vgcreate ssd-vg /dev/sdf1
+    lvcreate -L 80GB ssd-vg --name influxdb-storage
+    mkfs -t xfs /dev/mapper/ssd--vg-influxdb--storage
+    mkdir /exports/influxdb-storage
+    echo "/dev/mapper/ssd--vg-influxdb--storage /exports/influxdb-storage   xfs    defaults 0 0" >> /etc/fstab
+    mount /exports/influxdb-storage
+    
+    echo "/exports/influxdb-storage *(rw,root_squash)" > /etc/exports.d/simulation.exports
+    exportfs -r 
