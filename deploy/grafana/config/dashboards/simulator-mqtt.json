@@ -19,7 +19,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_METRICS}",
+          "datasource": "metrics",
           "fill": 1,
           "id": 1,
           "legend": {
@@ -165,7 +165,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_METRICS}",
+          "datasource": "metrics",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -272,7 +272,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_METRICS}",
+          "datasource": "metrics",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -387,7 +387,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_METRICS}",
+          "datasource": "metrics",
           "fill": 1,
           "id": 2,
           "legend": {
@@ -562,7 +562,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_METRICS}",
+          "datasource": "metrics",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -705,5 +705,5 @@
   },
   "timezone": "browser",
   "title": "Test Metrics MQTT",
-  "version": 6
+  "version": 7
 }
