@@ -1,4 +1,10 @@
 # Eclipse
 
+.classpath
 .project
+.settings/
+target/
+
+# Extra stuff
+
 /bagl/
