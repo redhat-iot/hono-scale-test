@@ -145,7 +145,7 @@ objects:
           - mountPath: /etc/grafana/provisioning/dashboards
             name: grafana-provisioning-dashboards
           - mountPath: /etc/grafana/dashboard-definitions
-            name: grafana-dashboard-defs
+            name: grafana-dashboards
         volumes:
         - name: data
           persistentVolumeClaim:
@@ -156,9 +156,9 @@ objects:
         - name: grafana-provisioning-dashboards
           configMap:
             name: grafana-provisioning-dashboards
-        - name: grafana-dashboard-defs
+        - name: grafana-dashboards
           configMap:
-            name: grafana-dashboard-defs
+            name: grafana-dashboards
     triggers:
     - type: ConfigChange
     - type: ImageChange
