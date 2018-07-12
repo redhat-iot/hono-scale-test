@@ -9,6 +9,5 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Recycle
   nfs:
-    path: /exports/influxdb-storage   # NFS export name
-    server: nfs-server.internal    # IP/hostname address of NFS server
-readOnly: false
+    path: /exports/influxdb-storage
+    server: gprfc093.sbu.lab.eng.bos.redhat.com

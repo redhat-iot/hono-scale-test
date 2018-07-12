@@ -102,7 +102,10 @@ on an additional SSD on the Simulator cluster master.
     lvcreate -L 80GB ssd-vg --name influxdb-storage
     mkfs -t xfs /dev/mapper/ssd--vg-influxdb--storage
     mkdir /exports/influxdb-storage
+    chown nfsnobody:nfsnobody /exports/influxdb-storage
+    chmod 0777 /exports/influxdb-storage
     echo "/dev/mapper/ssd--vg-influxdb--storage /exports/influxdb-storage   xfs    defaults 0 0" >> /etc/fstab
+    
     mount /exports/influxdb-storage
     
     echo "/exports/influxdb-storage *(rw,root_squash)" > /etc/exports.d/simulation.exports
