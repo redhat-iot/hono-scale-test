@@ -72,6 +72,6 @@ gprfc093.sbu.lab.eng.bos.redhat.com
 
 [nodes]
 gprfc093.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
-gprfc094.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
-gprfc095.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
-gprfc096.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
+gprfc094.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'primary','zone': 'default'}"
+gprfc095.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'primary','zone': 'default'}"
+gprfc096.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'primary','zone': 'default'}"
