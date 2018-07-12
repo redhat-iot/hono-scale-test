@@ -12,7 +12,7 @@ ENV \
 
 RUN yum -y update \
     && yum -y install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-"$GRAFANA_VERSION"-1.x86_64.rpm \
-    && yum clean all
+    && yum clean all && rm -rf /var/cache/yum
 
 EXPOSE 3000
 
