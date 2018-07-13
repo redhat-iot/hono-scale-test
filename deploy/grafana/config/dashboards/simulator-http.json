@@ -935,7 +935,7 @@
           "groupBy": [
             {
               "params": [
-                "1s"
+                "30s"
               ],
               "type": "time"
             },
