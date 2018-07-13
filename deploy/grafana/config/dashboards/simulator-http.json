@@ -15,6 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
+  "id": 3,
   "links": [],
   "panels": [
     {
@@ -50,7 +51,6 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:403",
           "alias": "http-publish.sum_sent",
           "color": "#DEDAF7",
           "linewidth": 3,
@@ -58,19 +58,16 @@
           "zindex": 2
         },
         {
-          "$$hashKey": "object:404",
           "alias": "http-publish.sum_failure",
           "color": "#890F02",
           "fill": 5
         },
         {
-          "$$hashKey": "object:405",
           "alias": "http-publish.sum_success",
           "color": "#3F6833",
           "fill": 5
         },
         {
-          "$$hashKey": "object:406",
           "alias": "http-publish.sum_backlog",
           "color": "#962D82",
           "fill": 0,
@@ -80,7 +77,6 @@
           "zindex": 3
         },
         {
-          "$$hashKey": "object:451",
           "alias": "http-publish.mean_failureRatio",
           "color": "#bf1b00",
           "yaxis": 2,
@@ -92,7 +88,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "$$hashKey": "object:211",
+          "$$hashKey": "object:296",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -172,11 +168,11 @@
           "tags": []
         },
         {
-          "$$hashKey": "object:1240",
+          "$$hashKey": "object:297",
           "groupBy": [
             {
               "params": [
-                "1s"
+                "$__interval"
               ],
               "type": "time"
             },
@@ -206,7 +202,7 @@
               },
               {
                 "params": [
-                  10
+                  "120"
                 ],
                 "type": "moving_average"
               },
@@ -240,7 +236,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:312",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -249,7 +244,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:313",
           "decimals": null,
           "format": "percentunit",
           "label": "",
@@ -935,7 +929,7 @@
           "groupBy": [
             {
               "params": [
-                "30s"
+                "1s"
               ],
               "type": "time"
             },
@@ -1052,7 +1046,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Test Metrics HTTP",
-  "uid": "6nyYndOmk",
-  "version": 2
+  "title": "Test Metrics HTTP Copy",
+  "uid": "GQ6dq5diz",
+  "version": 3
 }
