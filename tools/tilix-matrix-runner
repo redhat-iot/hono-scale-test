@@ -2,7 +2,7 @@
 
 printf -v CMD "%q" "$1"
 
-SSH="ssh -t"
+SSH="autossh -M 0 -t"
 
 start=81
 
