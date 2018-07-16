@@ -178,7 +178,7 @@ objects:
       app: simulator
       deploymentconfig: simulator-consumer-influxdb
     strategy:
-      type: Recreate
+      type: Rolling
     triggers:
       - type: ConfigChange 
       - type: ImageChange 
