@@ -201,6 +201,7 @@ objects:
           name: consumer-influxdb
           command:
             - "java"
+            - "-Xmx1024m"
             - "-Dvertx.cacheDirBase=/tmp"
             - "-Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory"
             - "-jar"
@@ -272,6 +273,7 @@ objects:
           name: simulator-http
           command:
             - "java"
+            - "-Xmx1024m"
             - "-jar"
             - "/build/simulator-http/target/simulator-http-app.jar"
           env:
@@ -334,6 +336,7 @@ objects:
           name: simulator-mqtt
           command:
             - "java"
+            - "-Xmx1024m"
             - "-Dvertx.cacheDirBase=/tmp"
             - "-Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory"
             - "-jar"
