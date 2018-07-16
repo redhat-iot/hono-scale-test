@@ -81,6 +81,11 @@
           "color": "#bf1b00",
           "yaxis": 2,
           "zindex": -3
+        },
+        {
+          "alias": "http-publish.sum_busy",
+          "color": "#cca300",
+          "fill": 5
         }
       ],
       "spaceLength": 10,
@@ -159,6 +164,24 @@
               {
                 "params": [
                   "sum_success"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "busy"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "sum_busy"
                 ],
                 "type": "alias"
               }
