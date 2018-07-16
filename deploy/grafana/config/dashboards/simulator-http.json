@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
-  "id": 3,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -88,7 +88,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "$$hashKey": "object:296",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -168,7 +167,6 @@
           "tags": []
         },
         {
-          "$$hashKey": "object:297",
           "groupBy": [
             {
               "params": [
@@ -202,9 +200,15 @@
               },
               {
                 "params": [
-                  "120"
+                  "30"
                 ],
                 "type": "moving_average"
+              },
+              {
+                "params": [
+                  "*2"
+                ],
+                "type": "math"
               },
               {
                 "params": [
