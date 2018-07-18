@@ -167,24 +167,6 @@
                 ],
                 "type": "alias"
               }
-            ],
-            [
-              {
-                "params": [
-                  "busy"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  "sum_busy"
-                ],
-                "type": "alias"
-              }
             ]
           ],
           "tags": []
@@ -219,19 +201,13 @@
               },
               {
                 "params": [],
-                "type": "max"
+                "type": "mean"
               },
               {
                 "params": [
-                  "30"
+                  10
                 ],
                 "type": "moving_average"
-              },
-              {
-                "params": [
-                  "*2"
-                ],
-                "type": "math"
               },
               {
                 "params": [
@@ -1075,5 +1051,5 @@
   "timezone": "browser",
   "title": "Test Metrics HTTP Copy",
   "uid": "GQ6dq5diz",
-  "version": 3
+  "version": 6
 }
