@@ -22,7 +22,7 @@ Update and install packages:
 
     yum -y update
     yum -y install wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct
-    yum -y install glusterfs-fuse
+    yum -y install glusterfs-fuse glusterfs-cli
     yum -y install NetworkManager
     yum -y install atomic-openshift-utils
 
@@ -41,6 +41,10 @@ Then install docker:
     yum -y install docker-1.13.1
 
 **Note:** Do not start Docker yet!
+
+Configure docker settings to limit log files:
+
+    sed -i '/^OPTIONS=/d' /etc/sysconfig/docker && echo "OPTIONS=' --selinux-enabled       --signature-verification=False --log-opt max-size=50m --log-opt max-file=5'" >> /etc/sysconfig/docker
 
 Create the docker volume group:
 
