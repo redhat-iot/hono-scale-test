@@ -274,6 +274,8 @@ objects:
           command:
             - "java"
             - "-Xmx1024m"
+            - "-Dvertx.cacheDirBase=/tmp"
+            - "-Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory"
             - "-jar"
             - "/build/simulator-http/target/simulator-http-app.jar"
           env:
@@ -284,7 +286,7 @@ objects:
             - name: HONO_HTTP_URL
               value: "${HONO_HTTP_SCHEMA}${HONO_HTTP_ROUTE_NAME}.${IOT_CLUSTER_HOSTNAME}"
             - name: NUM_DEVICES
-              value: "10"
+              value: "5000"
             - name: NUM_THREADS
               value: "10"
             - name: TELEMETRY_MS
@@ -293,6 +295,16 @@ objects:
               value: "0"
             - name: INFLUXDB_USER
               value: ${INFLUXDB_USER}
+            - name: DEVICE_PROVIDER
+              value: VERTX
+            - name: VERTX_POOLED_BUFFERS
+              value: "true"
+            - name: VERTX_MAX_POOL_SIZE
+              value: "50"
+            - name: INFLUXDB_METRICS_FLUSH_DURATION_SECONDS
+              value: "10"
+            - name: INFLUXDB_METRICS_BATCH_SIZE
+              value: "10"
             - name: INFLUXDB_PASSWORD
               valueFrom:
                 secretKeyRef:
