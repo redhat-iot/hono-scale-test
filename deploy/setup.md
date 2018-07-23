@@ -73,10 +73,26 @@ On the IoT cluster:
 
     oc -n hono create -f hono/nodeport.yml
 
-Switch to node port:
+Switch to node port on the simulation cluster:
 
     oc -n simulator env dc/simulator-http HONO_HTTP_URL=http://http.wonderful.iot-playground.org:30080
 
 Revert change:
 
     oc -n simulator env dc/simulator-http HONO_HTTP_URL=http://hono-adapter-http-vertx-hono.wonderful.iot-playground.org
+
+## Using qdrouter node ports
+
+On the IoT cluster:
+
+    oc -n enmasse create -f enmasse/nodeport.yml
+
+Switch to node port on the simulation cluster:
+
+    oc -n simulator env dc/simulator-consumer-influxdb MESSAGING_SERVICE_HOST=http.wonderful.iot-playground.org MESSAGING_SERVICE_PORT_AMQP=30671
+
+    oc -n simulator env dc/simulator-consumer-influxdb MESSAGING_SERVICE_HOST=hono-adapter-http-vertx-hono.wonderful.iot-playground.org MESSAGING_SERVICE_PORT_AMQP=30671
+
+Revert change:
+
+    oc -n simulator env dc/simulator-consumer-influxdb MESSAGING_SERVICE_HOST=messaging-enmasse.wonderful.iot-playground.org MESSAGING_SERVICE_PORT_AMQP=443
