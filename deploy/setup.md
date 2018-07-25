@@ -56,6 +56,20 @@ Allow the OpenShift router to process 20.000 * 2 (in + out) connections at the s
 
 ## Simulation cluster
 
+On the master node:
+
+    git clone https://github.com/redhat-iot/hono-scale-test.git
+    cd hono-scale-test
+    
+    oc create -f deploy/simulator/pv-influxdb.yml
+    oc create -f deploy/grafana/pv-grafana.yml
+
+    oc new-project simulator
+    oc process -f deploy/simulator/template.yml | oc create -f -
+
+    oc new-project grafana
+    oc process -f deploy/grafana/template.yml | oc create -f -
+
 # Scenarios
 
 ## Scenario – Dummy device registry
@@ -88,8 +102,6 @@ On the IoT cluster:
     oc -n enmasse create -f enmasse/nodeport.yml
 
 Switch to node port on the simulation cluster:
-
-    oc -n simulator env dc/simulator-consumer-influxdb MESSAGING_SERVICE_HOST=http.wonderful.iot-playground.org MESSAGING_SERVICE_PORT_AMQP=30671
 
     oc -n simulator env dc/simulator-consumer-influxdb MESSAGING_SERVICE_HOST=hono-adapter-http-vertx-hono.wonderful.iot-playground.org MESSAGING_SERVICE_PORT_AMQP=30671
 

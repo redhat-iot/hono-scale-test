@@ -16,7 +16,7 @@ parameters:
   required:        true
 - name:         GIT_REPOSITORY
   description:     URL of the Git repository
-  value:           https://github.com/ctron/hono-simulator
+  value:           https://github.com/redhat-iot/hono-simulator
   required:        true
 - name:         GIT_BRANCH
   description:     GitHub branch
@@ -215,6 +215,9 @@ objects:
               value: verysecret
             - name: HONO_TENANT
               value: DEFAULT_TENANT
+            - name: HONO_INITIAL_CREDITS
+              value: "100"
+
             - name: INFLUXDB_USER
               value: ${INFLUXDB_USER}
             - name: INFLUXDB_PASSWORD
@@ -224,12 +227,18 @@ objects:
                   key: influxdb-user-password
             - name: INFLUXDB_NAME
               value: ${INFLUXDB_DB}
+            - name: INFLUXDB_METRICS_BATCH_SIZE
+              value: "100"
+            - name: INFLUXDB_METRICS_FLUSH_DURATION_SECONDS
+              value: "10"
+
             - name: MESSAGING_SERVICE_HOST
               value: "${MESSAGING_ROUTE_NAME}.${IOT_CLUSTER_HOSTNAME}"
             - name: MESSAGING_SERVICE_PORT_AMQP
               value: "${MESSAGING_PORT}"
             - name: ENABLE_PERSISTENCE
               value: "false"
+
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
@@ -286,23 +295,18 @@ objects:
             - name: HONO_HTTP_URL
               value: "${HONO_HTTP_SCHEMA}${HONO_HTTP_ROUTE_NAME}.${IOT_CLUSTER_HOSTNAME}"
             - name: NUM_DEVICES
-              value: "5000"
+              value: "2000"
             - name: NUM_THREADS
               value: "10"
             - name: TELEMETRY_MS
               value: "1000"
             - name: EVENT_MS
               value: "0"
+
             - name: INFLUXDB_USER
               value: ${INFLUXDB_USER}
-            - name: DEVICE_PROVIDER
-              value: VERTX
-            - name: VERTX_POOLED_BUFFERS
-              value: "true"
-            - name: VERTX_MAX_POOL_SIZE
-              value: "50"
             - name: INFLUXDB_METRICS_FLUSH_DURATION_SECONDS
-              value: "10"
+              value: "100"
             - name: INFLUXDB_METRICS_BATCH_SIZE
               value: "10"
             - name: INFLUXDB_PASSWORD
@@ -312,6 +316,17 @@ objects:
                   key: influxdb-user-password
             - name: INFLUXDB_NAME
               value: ${INFLUXDB_DB}
+
+            - name: DEVICE_PROVIDER
+              value: VERTX
+            - name: VERTX_POOLED_BUFFERS
+              value: "true"
+            - name: VERTX_MAX_POOL_SIZE
+              value: "500"
+            - name: VERTX_RECREATE_CLIENT
+              value: '120000'
+            - name: VERTX_KEEP_ALIVE
+              value: 'true'
 
 - kind: DeploymentConfig
   apiVersion: v1
