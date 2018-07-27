@@ -72,15 +72,15 @@ gprfc081.sbu.lab.eng.bos.redhat.com
 gprfc081.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
 gprfc082.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
 gprfc083.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
-gprfc084.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
-gprfc085.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
-gprfc086.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
-gprfc087.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
-gprfc088.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
-gprfc089.sbu.lab.eng.bos.redhat.com openshift_schedulable=true
-gprfc090.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'storage','zone': 'default'}"
-gprfc091.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'storage','zone': 'default'}"
-gprfc092.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'storage','zone': 'default'}"
+gprfc084.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'infra','zone': 'default'}"
+gprfc085.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'default','zone': 'default'}"
+gprfc086.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'default','zone': 'default'}"
+gprfc087.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'default','zone': 'default'}"
+gprfc088.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'default','zone': 'default'}"
+gprfc089.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'default','zone': 'default'}"
+gprfc090.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'default','zone': 'default', 'storage': 'true'}"
+gprfc091.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'default','zone': 'default', 'storage': 'true'}"
+gprfc092.sbu.lab.eng.bos.redhat.com openshift_schedulable=true openshift_node_labels="{'region': 'default','zone': 'default', 'storage': 'true'}"
 
 [glusterfs]
 gprfc090.sbu.lab.eng.bos.redhat.com glusterfs_devices='[ "/dev/sdc", "/dev/sdd", "/dev/sde" ]'
