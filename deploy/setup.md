@@ -108,3 +108,80 @@ Switch to node port on the simulation cluster:
 Revert change:
 
     oc -n simulator env dc/simulator-consumer-influxdb MESSAGING_SERVICE_HOST=messaging-enmasse.wonderful.iot-playground.org MESSAGING_SERVICE_PORT_AMQP=443
+
+## Link capacity
+
+This scenario sets the link capacity on all components to 5.000. Defaults otherwise range from 50 to 200 over
+various components.
+
+On the IoT cluster:
+
+    oc -n enmasse env deployment/qdrouterd -c router LINK_CAPACITY=5000
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx HONO_HTTP_RECEIVER_LINK_CREDIT=5000 HONO_REGISTRATION_INITIAL_CREDITS=5000 HONO_TENANT_INITIAL_CREDITS=5000
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry HONO_REGISTRY_AMQP_RECEIVER_LINK_CREDIT=5000
+
+On the simulation cluster:
+
+    oc -n simulator env dc/simulator-consumer-influxdb HONO_INITIAL_CREDITS=5000
+
+Revert the changes:
+
+    oc -n enmasse env deployment/qdrouterd -c router LINK_CAPACITY=50
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx HONO_HTTP_RECEIVER_LINK_CREDIT- HONO_REGISTRATION_INITIAL_CREDITS=200 HONO_TENANT_INITIAL_CREDITS-
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry HONO_REGISTRY_AMQP_RECEIVER_LINK_CREDIT-
+
+    oc -n simulator env dc/simulator-consumer-influxdb HONO_INITIAL_CREDITS-
+
+## Max Instances
+
+Setting the "max instance" value to some value. More instances require more CPU as well. But only little more memory.
+These settings allow over overcommitting CPU but not memory. For the device registry a good ratio of registry instances vs adapter instances seems
+to be 1:3.
+
+Example for `maxInstances=1/1`:
+
+    oc -n hono rollout pause dc/hono-adapter-http-vertx
+    
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx HONO_APP_MAX_INSTANCES=1
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx --limits=cpu=2,memory=512Mi --requests=cpu=1,memory=512Mi
+    
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry HONO_APP_MAX_INSTANCES=1
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry --limits=cpu=1,memory=512Mi --requests=cpu=300m,memory=512Mi
+    
+    oc -n hono rollout resume dc/hono-adapter-http-vertx
+
+Example for `maxInstances=9/3`:
+
+    oc -n hono rollout pause dc/hono-adapter-http-vertx
+    
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx HONO_APP_MAX_INSTANCES=9
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx --limits=cpu=12,memory=2048Mi --requests=cpu=9,memory=2048Mi
+    
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry HONO_APP_MAX_INSTANCES=3
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry --limits=cpu=6,memory=1024Mi --requests=cpu=3,memory=1024Mi
+    
+    oc -n hono rollout resume dc/hono-adapter-http-vertx
+
+Example for `maxInstances=6/2`:
+
+    oc -n hono rollout pause dc/hono-adapter-http-vertx
+    
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx HONO_APP_MAX_INSTANCES=6
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx --limits=cpu=9,memory=2048Mi --requests=cpu=6,memory=2048Mi
+    
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry HONO_APP_MAX_INSTANCES=3
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry --limits=cpu=4,memory=1024Mi --requests=cpu=2,memory=1024Mi
+    
+    oc -n hono rollout resume dc/hono-adapter-http-vertx
+
+Example for `maxInstances=3/1`:
+
+    oc -n hono rollout pause dc/hono-adapter-http-vertx
+    
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx HONO_APP_MAX_INSTANCES=3
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx --limits=cpu=6,memory=2048Mi --requests=cpu=3,memory=2048Mi
+    
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry HONO_APP_MAX_INSTANCES=1
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry --limits=cpu=2,memory=1024Mi --requests=cpu=1,memory=1024Mi
+    
+    oc -n hono rollout resume dc/hono-adapter-http-vertx
