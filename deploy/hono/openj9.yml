@@ -1,0 +1,15 @@
+---
+kind: ImageStream
+apiVersion: v1
+metadata:
+  name: ctron-s2i-java-openj9
+spec:
+  tags:
+  - from:
+      kind: DockerImage
+      name: ctron/s2i-java-openj9:2.2
+    importPolicy:
+      scheduled: true
+    name: "2.2"
+    referencePolicy:
+      type: Source

@@ -185,3 +185,14 @@ Example for `maxInstances=3/1`:
     oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry --limits=cpu=2,memory=1024Mi --requests=cpu=1,memory=1024Mi
     
     oc -n hono rollout resume dc/hono-adapter-http-vertx
+
+## Using Eclipe OpenJ9
+
+On the IoT cluster:
+
+    oc create -f hono/openj9.yml
+    oc patch bc/fabric8-s2i-java-custom-build --patch '{"spec":{"strategy":{"dockerStrategy":{"from":{"name":"ctron-s2i-java-openj9:2.2"}}}}}'
+
+Revert back:
+
+    oc patch bc/fabric8-s2i-java-custom-build --patch '{"spec":{"strategy":{"dockerStrategy":{"from":{"name":"fabric8-s2i-java:2.2"}}}}}'
