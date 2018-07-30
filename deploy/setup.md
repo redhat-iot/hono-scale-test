@@ -40,7 +40,7 @@ Allow the OpenShift router to process 20.000 * 2 (in + out) connections at the s
     curl -LO https://github.com/EnMasseProject/enmasse/releases/download/0.21.0/enmasse-0.21.0.tgz
     tar xzf enmasse-0.21.0.tgz
     
-    ./enmasse-0.21.0/deploy.sh -n enmasse -m https://wonderful.iot-playground.org:8443 -user <user>
+    ./enmasse-0.21.0/deploy.sh -n enmasse -m https://wonderful.iot-playground.org:8443 -u <user>
 
     oc new-project hono --display-name='Eclipse Hono™'
     cd example/src/main/deploy/openshift_s2i
@@ -157,8 +157,8 @@ Example for `maxInstances=9/3`:
     oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx HONO_APP_MAX_INSTANCES=9
     oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-adapter-http-vertx --limits=cpu=12,memory=2048Mi --requests=cpu=9,memory=2048Mi
     
-    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry HONO_APP_MAX_INSTANCES=3
-    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry --limits=cpu=6,memory=1024Mi --requests=cpu=3,memory=1024Mi
+    oc -n hono env dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry HONO_APP_MAX_INSTANCES=9
+    oc -n hono set resources dc/hono-adapter-http-vertx -c eclipsehono-hono-service-device-registry --limits=cpu=6,memory=1024Mi --requests=cpu=1,memory=1024Mi
     
     oc -n hono rollout resume dc/hono-adapter-http-vertx
 
@@ -190,9 +190,19 @@ Example for `maxInstances=3/1`:
 
 On the IoT cluster:
 
-    oc create -f hono/openj9.yml
-    oc patch bc/fabric8-s2i-java-custom-build --patch '{"spec":{"strategy":{"dockerStrategy":{"from":{"name":"ctron-s2i-java-openj9:2.2"}}}}}'
+    oc -n hono create -f hono/openj9.yml
+    oc -n hono patch bc/fabric8-s2i-java-custom-build --patch '{"spec":{"strategy":{"dockerStrategy":{"from":{"name":"ctron-s2i-java-openj9:2.2"}}}}}'
 
 Revert back:
 
-    oc patch bc/fabric8-s2i-java-custom-build --patch '{"spec":{"strategy":{"dockerStrategy":{"from":{"name":"fabric8-s2i-java:2.2"}}}}}'
+    oc -n hono patch bc/fabric8-s2i-java-custom-build --patch '{"spec":{"strategy":{"dockerStrategy":{"from":{"name":"fabric8-s2i-java:2.2"}}}}}'
+
+## Switch to events
+
+On the Simulation Cluster:
+
+    oc -n simulator env dc/simulator-http TELEMETRY_MS=0 EVENT_MS=1000
+
+Revert back:
+
+    oc -n simulator env dc/simulator-http TELEMETRY_MS=1000 EVENT_MS=0
