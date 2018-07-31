@@ -64,6 +64,11 @@ On the master node of the IoT cluster:
 
 ## Simulation cluster
 
+Extract the EnMasse certificate:
+
+    oc -n enmasse extract secret/external-certs-messaging
+    # Creates three files, we only need "tls.crt" 
+
 On the master node:
 
     git clone https://github.com/redhat-iot/hono-scale-test.git
@@ -74,6 +79,7 @@ On the master node:
 
     oc new-project simulator
     oc process -f deploy/simulator/template.yml | oc create -f -
+    oc create configmap simulator-config --from-file=server-cert.pem=tls.crt --dry-run -o yaml | oc replace -f -
 
     oc new-project grafana
     oc process -f deploy/grafana/template.yml | oc create -f -
