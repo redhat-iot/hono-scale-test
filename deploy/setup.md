@@ -41,6 +41,8 @@ Allow the OpenShift router to process 20.000 * 2 (in + out) connections at the s
     tar xzf enmasse-0.21.0.tgz
     
     ./enmasse-0.21.0/deploy.sh -n enmasse -m https://wonderful.iot-playground.org:8443 -u <user>
+    # wait until enmasse is ready
+    curl -X POST --insecure -T example/src/main/deploy/openshift_s2i/addresses.json -H "content-type: application/json" https://$(oc -n enmasse get route restapi -o jsonpath='{.spec.host}')/apis/enmasse.io/v1alpha1/namespaces/enmasse/addressspaces/default/addresses
 
     oc new-project hono --display-name='Eclipse Hono™'
     cd example/src/main/deploy/openshift_s2i
@@ -53,6 +55,12 @@ Allow the OpenShift router to process 20.000 * 2 (in + out) connections at the s
     oc create configmap grafana-dashboard-defs --from-file=../../config/grafana/dashboard-definitions
     oc process -f grafana-template.yml -p "GIT_REPOSITORY=https://github.com/redhat-iot/hono.git" -p GIT_BRANCH=scaletest/2/0.7-SNAPSHOT -p ADMIN_PASSWORD=admin | oc create -f -
 
+### Move qdrouterd to infra region
+
+On the master node of the IoT cluster:
+
+    oc annotate ns/enmasse --overwrite 'openshift.io/node-selector='
+    oc patch  deploy/qdrouterd -p '{"spec":{"template":{"spec":{"nodeSelector":{"region":"infra"}}}}}
 
 ## Simulation cluster
 
